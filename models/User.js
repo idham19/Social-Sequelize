@@ -1,7 +1,9 @@
 const { db, Sequelize } = require("../db/connection");
 const { Model, DataTypes } = require("sequelize");
+const users= require("../seed/users.json")
+
+
 class User extends Model {}
-const profiles= require("../seed/profiles.json")
 
 User.init(
   {
@@ -14,11 +16,12 @@ User.init(
   }
 );
 
-const user = User.create({
-  username: "m",
-  email: "djksnjk@"
-});
 
-console.log(profiles);
+// db.sync()
+//   .then(() => {
+//     console.log('Models synced successfully.');
+//     return User.bulkCreate(users);
+//   })
+
 
 module.exports = User;
