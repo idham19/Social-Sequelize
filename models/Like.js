@@ -10,4 +10,10 @@ Like.init({
     modelName: "Like",
 })
 
+// db.sync()
+//   .then(() => {
+//     console.log('Models synced successfully.');
+//     return Like.create( );
+//   })
+
 module.exports = Like;

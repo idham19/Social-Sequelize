@@ -20,6 +20,20 @@ describe('Social Sequelzie Test', () => {
         expect(foundUser.Profile.bio).toBe('This is a test bio');
       });
    
+      test('A User can have many Posts', async () => {
+        const user = await User.create({ username: 'testuser2', email: 'test2@example.com' });
+        // Create posts associated with the user
+        const post1 = await Post.create({ title: 'First Post', body: 'Content of the first post', UserId: user.id });
+        const post2 = await Post.create({ title: 'Second Post', body: 'Content of the second post', UserId: user.id });
+      
+        // Find the user and include the associated posts
+        const foundUser = await User.findOne({ where: { id: user.id }, include: Post });
+        
+        // Assertions
+        expect(foundUser.Posts.length).toBe(2);
+        expect(foundUser.Posts[0].title).toBe('First Post');
+        expect(foundUser.Posts[1].title).toBe('Second Post');
+      });
 
 
 
