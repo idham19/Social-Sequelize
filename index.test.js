@@ -82,4 +82,48 @@ describe("Social Sequelzie Test", () => {
     expect(foundPost.Comments[0].body).toBe("This is a great post!");
     expect(foundPost.Comments[1].body).toBe("I completely agree with you.");
   });
+
+  test("A User can have many Likes and vice versa", async () => {
+    // Create a user
+    const user = await User.create({
+      username: "testuser3",
+      email: "test3@example.com",
+    });
+
+    // Create two likes
+    const like1 = await Like.create();
+    const like2 = await Like.create();
+
+    // Associate the likes with the user
+    await user.addLike(like1);
+    await user.addLike(like2);
+
+    // Find the user and include associated likes
+    const foundUser = await User.findOne({
+      where: { id: user.id },
+      include: Like,
+    });
+
+    // Check that the user has two likes
+    expect(foundUser.Likes.length).toBe(2);
+
+    // Now test the reverse association: a Like can have many Users
+    const anotherUser = await User.create({
+      username: "testuser4",
+      email: "test4@example.com",
+    });
+
+    // Associate the same likes with another user
+    await anotherUser.addLike(like1);
+    await anotherUser.addLike(like2);
+
+    // Find the first like and include associated users
+    const foundLike = await Like.findOne({
+      where: { id: like1.id },
+      include: User,
+    });
+
+    // Check that the like is associated with two users
+    expect(foundLike.Users.length).toBe(2);
+  });
 });
