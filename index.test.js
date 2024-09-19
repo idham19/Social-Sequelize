@@ -12,7 +12,13 @@ describe('Social Sequelzie Test', () => {
     })
 
     // Write your tests here
+    test('A User can have one Profile', async () => {
+        const user = await User.create({ username: 'testuser', email: 'test@example.com' });
+        const profile = await Profile.create({ bio: 'This is a test bio', UserId: user.id });
     
+        const foundUser = await User.findOne({ where: { id: user.id }, include: Profile });
+        expect(foundUser.Profile.bio).toBe('This is a test bio');
+      });
     test("replace with your test", function() {
         expect(true).toBe(true);
     })

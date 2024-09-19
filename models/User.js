@@ -1,6 +1,7 @@
 const { db, Sequelize } = require("../db/connection");
 const { Model, DataTypes } = require("sequelize");
 class User extends Model {}
+const profiles= require("../seed/profiles.json")
 
 User.init(
   {
@@ -18,5 +19,6 @@ const user = User.create({
   email: "djksnjk@"
 });
 
+console.log(profiles);
 
 module.exports = User;
