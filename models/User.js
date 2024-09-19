@@ -13,4 +13,10 @@ User.init(
   }
 );
 
+const user = User.create({
+  username: "m",
+  email: "djksnjk@"
+});
+
+
 module.exports = User;
